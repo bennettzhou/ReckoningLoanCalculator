@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.superhero.loancalculator.calculators.LoanType;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * This class is a set of Loan Terms that the Loan Calculator will used to calculate monthly payments.
@@ -78,7 +79,7 @@ public class LoanTerms {
             rate = rate.add(incomeAdj);
         if(loanAmount/(numYears*12) < (totalMonthlyIncome - totalMonthlyDebt)*0.33)
             rate = rate.subtract(incomeAdj);
-        return rate;
+        return rate.setScale(4, RoundingMode.HALF_UP);
     }
 
 
