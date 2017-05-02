@@ -79,7 +79,7 @@ public class LoanTerms {
             rate = rate.add(incomeAdj);
         if(loanAmount/(numYears*12) < (totalMonthlyIncome - totalMonthlyDebt)*0.33)
             rate = rate.subtract(incomeAdj);
-        return rate.setScale(4, RoundingMode.HALF_UP);
+        return rate.setScale(3, RoundingMode.HALF_UP);
     }
 
 
