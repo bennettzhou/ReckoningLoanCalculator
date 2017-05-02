@@ -23,7 +23,7 @@ public class HomeLoanCalculatorTest {
         LoanDetails details = new HomeLoanCalculator(loanTerms).calculateLoanDetails();
 
         /* Check Values */
-        assertThat(details.getMonthlyPayment(), is("$442.82"));
+        assertThat(details.getMonthlyPayment(), is("$2,771.81"));
     }
 
     @Test
@@ -36,6 +36,6 @@ public class HomeLoanCalculatorTest {
         LoanDetails details = new HomeLoanCalculator(loanTerms).calculateLoanDetails();
 
         /* Check Values */
-        assertThat(details.getMonthlyPayment(), is("$1,670.86"));
+        assertThat(details.getMonthlyPayment(), is("$466.15"));
     }
 }

@@ -16,13 +16,13 @@ import java.math.BigDecimal;
 public class LoanTerms {
 
     /** Current monthly income */
-    private double totalMonthlyIncome;
+    private double totalMonthlyIncome = 0.00;
 
     /** Current monthly debt */
-    private double totalMonthlyDebt;
+    private double totalMonthlyDebt = 0.00;
 
     /** Current Age of borrower */
-    private int currentAge;
+    private int currentAge = 0;
 
     /** Number of Months this loan is for */
     private int numYears;
@@ -54,19 +54,31 @@ public class LoanTerms {
         /** interest calculation logic here, to be defined */
         switch (type) {
             case ING:
-                return BigDecimal.valueOf(1.22);
+                return rateAdjustment(new BigDecimal(3.12), new BigDecimal(0.42), new BigDecimal(0.43));
             case CITI:
-                return BigDecimal.valueOf(1.23);
+                return rateAdjustment(new BigDecimal(3.63), new BigDecimal(0.64), new BigDecimal(0.97));
             case HSBC:
-                return BigDecimal.valueOf(1.24);
+                return rateAdjustment(new BigDecimal(3.64), new BigDecimal(0.43), new BigDecimal(1.04));
             case OCBC:
-                return BigDecimal.valueOf(1.25);
+                return rateAdjustment(new BigDecimal(4.25), new BigDecimal(0.23), new BigDecimal(0.88));
             case SCB:
-                return BigDecimal.valueOf(1.27);
+                return rateAdjustment(new BigDecimal(5.27), new BigDecimal(0.75), new BigDecimal(0.735));
             default:
                 return null;
         }
 
+    }
+
+    private BigDecimal rateAdjustment(BigDecimal rate, BigDecimal ageAdj, BigDecimal incomeAdj){
+        if(40 - currentAge > numYears)
+            rate = rate.subtract(ageAdj);
+        if(55 - currentAge < numYears)
+            rate = rate.add(ageAdj);
+        if(loanAmount/(numYears*12) > (totalMonthlyIncome - totalMonthlyDebt)*0.66)
+            rate = rate.add(incomeAdj);
+        if(loanAmount/(numYears*12) < (totalMonthlyIncome - totalMonthlyDebt)*0.33)
+            rate = rate.subtract(incomeAdj);
+        return rate;
     }
 
 
